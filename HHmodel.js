@@ -46,10 +46,10 @@ HodgkinHuxley.prototype.tauH = function(V) {
 	return 1/(this.AlphaH(V)+this.BetaH(V));
 };
 HodgkinHuxley.prototype.model2 = function() {
-	var timeInterval = 1;
-	var spaceInterval = 1;
-	var Nt = 200;
-	var Nx = 10;
+	var timeInterval = 35;
+	var spaceInterval = 30;
+	var Nt = 4500;
+	var Nx = 200;
 	var dt = timeInterval/Nt;
 	var dx = spaceInterval/Nx;
 
@@ -85,7 +85,8 @@ HodgkinHuxley.prototype.model2 = function() {
 
 	for (var j = 0; j < Nt-1; j++) {
 		for (var i = 1; i < Nx - 1; i++) {
-			//if(j => 10 && j <= 100) I_ext = 100;
+			if((j >= 60 && j<= 200) || (j >= 2500 && j<= 2800)) I_ext = 30;
+			else I_ext = 0;
 			m[i][j+1] = m[i][j] - (dt*(m[i][j]-this.m0(V[i][j])))/this.tauM(V[i][j]);
 			n[i][j+1] = n[i][j] - (dt*(n[i][j]-this.n0(V[i][j])))/this.tauN(V[i][j]);
 			h[i][j+1] = h[i][j] - (dt*(h[i][j]-this.h0(V[i][j])))/this.tauH(V[i][j]);
