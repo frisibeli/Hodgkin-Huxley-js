@@ -16,7 +16,7 @@
 	$(document).ready(function(){
 		$(function () {
 			var HH = new HodgkinHuxley();
-			var result = HH.model()
+			var result = HH.model2()
 		    $('#container').highcharts({
 		        title: {
 		            text: 'Модел на нервен импулс',
@@ -51,17 +51,17 @@
 		            borderWidth: 0
 		        },
 		        series: [{
-		            name: 'V',
-		            data: result.V
+		            name: 'V0',
+		            data: result[0]
 		        }, {
-		            name: 'M0',
-		            data: result.m0
+		            name: 'V1',
+		            data: result[1]
 		        }, {
-		            name: 'N0',
-		            data: result.n0
+		            name: 'V2',
+		            data: result[2]
 		        }, {
-		            name: 'H0',
-		            data: result.h0
+		            name: 'V3',
+		            data: result[3]
 		        }]
 		    });
 		});
