@@ -64,10 +64,13 @@ HodgkinHuxley.prototype.model = function() {
 		m:[],
 		n:[],
 		h:[],
+		m0:[],
+		n0:[],
+		h0:[],
 		I_Na:[]
 	}
 	for (var i = 0; i < N; i++) {
-		//if(i => 1000 && i <= 2000) I_ext = 50;
+		if(i => 1000 && i <= 2000) I_ext = 50;
 		m = m - (dt*(m-this.m0(V)))/this.tauM(V);
 		n = n - (dt*(n-this.n0(V)))/this.tauN(V);
 		h = h - (dt*(h-this.h0(V)))/this.tauH(V);
@@ -80,6 +83,9 @@ HodgkinHuxley.prototype.model = function() {
 		result.n.push(n);
 		result.h.push(h);
 		result.V.push(V);
+		result.m0.push(this.m0(V));
+		result.n0.push(this.n0(V));
+		result.h0.push(this.h0(V));
 		result.I_Na.push(I_Na);
 	};
 	return result;
