@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Hodgkin-Huxley's model of the Neuron's Action potential</title>
+</head>
+<body>
+
+<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+<script   src="https://code.jquery.com/jquery-2.2.2.min.js"   integrity="sha256-36cp2Co+/62rEAAYHLmRCPIych47CvdM+uTBJwSzWjI="   crossorigin="anonymous"></script>
+<script src="HHmodel.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$(function () {
+			var HH = new HodgkinHuxley();
+			var result = HH.model()
+		    $('#container').highcharts({
+		        title: {
+		            text: 'Модел на нервен импулс',
+		            x: -20 //center
+		        },
+		        subtitle: {
+		            text: 'Ходжкин и Хъксли',
+		            x: -20
+		        },
+		        xAxis: {
+		            title: {
+		                text: 'T'
+		            }
+		        },
+		        yAxis: {
+		            title: {
+		                text: 'V'
+		            },
+		            plotLines: [{
+		                value: 0,
+		                width: 1,
+		                color: '#808080'
+		            }]
+		        },
+		        tooltip: {
+		            valueSuffix: 'mV'
+		        },
+		        legend: {
+		            layout: 'vertical',
+		            align: 'right',
+		            verticalAlign: 'middle',
+		            borderWidth: 0
+		        },
+		        series: [{
+		            name: 'V',
+		            data: result.V
+		        }, {
+		            name: 'JNa',
+		            data: result.I_Na
+		        }]
+		    });
+		});
+	})	
+</script>
+
+</body>
+</html>
