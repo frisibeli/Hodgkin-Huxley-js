@@ -46,11 +46,12 @@ HodgkinHuxley.prototype.tauH = function(V) {
 	return 1/(this.AlphaH(V)+this.BetaH(V));
 };
 HodgkinHuxley.prototype.model2 = function() {
-	var timeInterval = 100;
-	var spaceInterval = 3;
-	var N = 10000;
-	var dt = timeInterval/N;
-	var dx = spaceInterval/N;
+	var timeInterval = 1;
+	var spaceInterval = 1;
+	var Nt = 200;
+	var Nx = 10;
+	var dt = timeInterval/Nt;
+	var dx = spaceInterval/Nx;
 
 	var V = [];
 	var m = [];
@@ -63,12 +64,12 @@ HodgkinHuxley.prototype.model2 = function() {
 	var I_ext = 0;
 	var I_ion = 0;
 
-	for (var i = 0; i <spaceInterval; i++) {
+	for (var i = 0; i <Nx; i++) {
 		V[i] = [];
 		m[i] = [];
 		n[i] = [];
 		h[i] = [];
-		for (var j = 0; j < timeInterval; j++) {
+		for (var j = 0; j < Nt-1; j++) {
 			V[i][j] = 0;
 			m[i][j] = 0;
 			n[i][j] = 0;
@@ -76,23 +77,24 @@ HodgkinHuxley.prototype.model2 = function() {
 		};
 	}
 
-	for (var i = 0; i <spaceInterval; i++) {
+	for (var i = 0; i <Nx; i++) {
 		m[i][0] = this.m0(V[i][0]);
 		n[i][0] = this.n0(V[i][0]);
 		h[i][0] = this.h0(V[i][0]);
 	}	
 
-	for (var j = 0; j < timeInterval; j++) {
-		for (var i = 1; i < spaceInterval - 1; i++) {
+	for (var j = 0; j < Nt-1; j++) {
+		for (var i = 1; i < Nx - 1; i++) {
+			//if(j => 10 && j <= 100) I_ext = 100;
 			m[i][j+1] = m[i][j] - (dt*(m[i][j]-this.m0(V[i][j])))/this.tauM(V[i][j]);
 			n[i][j+1] = n[i][j] - (dt*(n[i][j]-this.n0(V[i][j])))/this.tauN(V[i][j]);
 			h[i][j+1] = h[i][j] - (dt*(h[i][j]-this.h0(V[i][j])))/this.tauH(V[i][j]);
-			I_Na = this.G_Na*Math.pow(m[i][j], 3)*h[i][j]*(this.V_Na-V[i][j]);
-			I_K = this.G_K*Math.pow(n[i][j], 4)*(this.V_K-V[i][j]);
-			I_L = this.G_L*(this.V_L-V[i][j]);
-			I_ion = I_Na + I_K + I_ext;
+			I_Na = this.G_Na*Math.pow(m[i][j], 3)*h[i][j]*(V[i][j]-this.V_Na);
+			I_K = this.G_K*Math.pow(n[i][j], 4)*(V[i][j]-this.V_K);
+			I_L = this.G_L*(V[i][j]-this.V_L);
+			I_ion = I_Na + I_K + I_L + I_ext;
 			//without R
-			V[i][j+1] = (dt/Math.pow(dx,2))*(V[i+1][j] - 2*V[i][j] + V[i-1][j]) + V[i][j] - I_ion;
+			V[i][j+1] = (dt/Math.pow(dx,2))*(V[i+1][j] - 2*V[i][j] + V[i-1][j]) + V[i][j] - dt*I_ion;
 		};
 	};
 	console.log(V);
@@ -132,7 +134,7 @@ HodgkinHuxley.prototype.model = function() {
 		I_Na = this.G_Na*Math.pow(m, 3)*h*(this.V_Na-V);
 		I_K = this.G_K*Math.pow(n, 4)*(this.V_K-V);
 		I_L = this.G_L*(this.V_L-V);
-		I_ion = I_Na + I_K + I_ext;
+		I_ion = I_Na + I_K + I_L + I_ext;
 		V = V + (I_ion*dt)/this.C;
 		result.m.push(m);
 		result.n.push(n);
