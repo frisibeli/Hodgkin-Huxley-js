@@ -129,6 +129,7 @@ HodgkinHuxley.prototype.model = function() {
 	}
 	for (var i = 0; i < N; i++) {
 		if(i => 1000 && i <= 2000) I_ext = 50;
+		else I_ext = 0;
 		m = m - (dt*(m-this.m0(V)))/this.tauM(V);
 		n = n - (dt*(n-this.n0(V)))/this.tauN(V);
 		h = h - (dt*(h-this.h0(V)))/this.tauH(V);
