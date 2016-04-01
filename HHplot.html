@@ -54,24 +54,10 @@
 		        },
 		        series: [{
 		            name: 'V0',
-		            data: result[1]
-		        }, {
-		            name: 'V1',
-		            data: result[2]
-		        }, {
-		            name: 'V2',
-		            data: result[3]
-		        }, {
-		            name: 'V10',
 		            data: result[10]
-		        }, {
-		            name: 'V20',
-		            data: result[20]
-		        }, {
-		            name: 'V30',
-		            data: result[29]
 		        }]
 		    });
+		    var chart = $('#container').highcharts();
 			$('#container1').highcharts({
 		        title: {
 		            text: 'Модел на нервен импулс със space clamp',
@@ -105,9 +91,16 @@
 		            verticalAlign: 'middle',
 		            borderWidth: 0
 		        },
-		        series: [{
-		            name: 'V',
-		            data: result1.V
+		        series: [
+		        {
+		            name: 'm',
+		            data: result1.m
+		        },{
+		            name: 'n',
+		            data: result1.n
+		        },{
+		            name: 'h',
+		            data: result1.h
 		        }]
 		    });
 		});
