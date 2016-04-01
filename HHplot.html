@@ -7,6 +7,7 @@
 <body>
 
 <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+<div id="container1" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 
 <script   src="https://code.jquery.com/jquery-2.2.2.min.js"   integrity="sha256-36cp2Co+/62rEAAYHLmRCPIych47CvdM+uTBJwSzWjI="   crossorigin="anonymous"></script>
 <script src="HHmodel.js"></script>
@@ -16,7 +17,8 @@
 	$(document).ready(function(){
 		$(function () {
 			var HH = new HodgkinHuxley();
-			var result = HH.model2()
+			var result = HH.model2();
+			var result1 = HH.model();
 		    $('#container').highcharts({
 		        title: {
 		            text: 'Модел на нервен импулс',
@@ -52,16 +54,53 @@
 		        },
 		        series: [{
 		            name: 'V0',
-		            data: result[0]
-		        }, {
-		            name: 'V1',
-		            data: result[1]
-		        }, {
-		            name: 'V2',
-		            data: result[2]
-		        }, {
-		            name: 'V3',
-		            data: result[3]
+		            data: result[10]
+		        }]
+		    });
+		    var chart = $('#container').highcharts();
+			$('#container1').highcharts({
+		        title: {
+		            text: 'Модел на нервен импулс със space clamp',
+		            x: -20 //center
+		        },
+		        subtitle: {
+		            text: 'Ходжкин и Хъксли',
+		            x: -20
+		        },
+		        xAxis: {
+		            title: {
+		                text: 'T'
+		            }
+		        },
+		        yAxis: {
+		            title: {
+		                text: 'V'
+		            },
+		            plotLines: [{
+		                value: 0,
+		                width: 1,
+		                color: '#808080'
+		            }]
+		        },
+		        tooltip: {
+		            valueSuffix: 'mV'
+		        },
+		        legend: {
+		            layout: 'vertical',
+		            align: 'right',
+		            verticalAlign: 'middle',
+		            borderWidth: 0
+		        },
+		        series: [
+		        {
+		            name: 'm',
+		            data: result1.m
+		        },{
+		            name: 'n',
+		            data: result1.n
+		        },{
+		            name: 'h',
+		            data: result1.h
 		        }]
 		    });
 		});
