@@ -21,7 +21,7 @@
 			var result1 = HH.model();
 		    $('#container').highcharts({
 		        title: {
-		            text: 'Модел на нервен импулс',
+		            text: 'Модел на нервен импулс по аксон със space clamping',
 		            x: -20 //center
 		        },
 		        subtitle: {
@@ -30,12 +30,12 @@
 		        },
 		        xAxis: {
 		            title: {
-		                text: 'T'
+		                text: 't'
 		            }
 		        },
 		        yAxis: {
 		            title: {
-		                text: 'V'
+		                text: 'V(t)'
 		            },
 		            plotLines: [{
 		                value: 0,
@@ -54,13 +54,21 @@
 		        },
 		        series: [{
 		            name: 'V0',
-		            data: result[10]
+		            data: result[1]
 		        }]
 		    });
 		    var chart = $('#container').highcharts();
+		    var i =0;
+		    var intervalHolder = setInterval(function(){
+		    	if(i == 4499) clearInterval(intervalHolder);
+		    	console.log(i);
+		    	chart.series[0].update({
+				    data: result[i++]
+				}, true);
+		    }, 1)
 			$('#container1').highcharts({
 		        title: {
-		            text: 'Модел на нервен импулс със space clamp',
+		            text: 'Електропроводимост на йонните канали',
 		            x: -20 //center
 		        },
 		        subtitle: {
@@ -93,14 +101,11 @@
 		        },
 		        series: [
 		        {
-		            name: 'm',
-		            data: result1.m
+		            name: 'I_Na',
+		            data: result1.I_Na
 		        },{
-		            name: 'n',
-		            data: result1.n
-		        },{
-		            name: 'h',
-		            data: result1.h
+		            name: 'I_K',
+		            data: result1.I_K
 		        }]
 		    });
 		});
