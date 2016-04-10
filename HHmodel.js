@@ -85,7 +85,7 @@ HodgkinHuxley.prototype.model2 = function() {
 
 	for (var j = 0; j < Nt-1; j++) {
 		for (var i = 1; i < Nx - 1; i++) {
-			if((j >= 60 && j<= 200) && (i >= 0 && i<= 50)) I_ext = -50;
+			if((j >= 60 && j<= 200) && (i >= 0 && i<= 10)) I_ext = -50;
 			else I_ext = 0;
 			m[i][j+1] = m[i][j] - (dt*(m[i][j]-this.m0(V[i][j])))/this.tauM(V[i][j]);
 			n[i][j+1] = n[i][j] - (dt*(n[i][j]-this.n0(V[i][j])))/this.tauN(V[i][j]);
